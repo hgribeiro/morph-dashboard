@@ -43,7 +43,6 @@ function Dashboard() {
       const eixoYForVulneratie = [];
       for (let i = 0; i < response.data.length; i++) {
         eixoXForVulneratie.push(response.data[i].host);
-        console.log(response.data[i].host);
         eixoYForVulneratie.push(response.data[i].vuln_count);
       }
       setEixoForVulneratie([eixoXForVulneratie, eixoYForVulneratie]);

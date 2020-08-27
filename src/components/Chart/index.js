@@ -1,16 +1,7 @@
 import React, { useEffect, useState } from 'react';
 
 // import { Container } from './styles';
-import {
-  BarChart,
-  Bar,
-  Cell,
-  XAxis,
-  YAxis,
-  CartesianGrid,
-  Tooltip,
-  Legend,
-} from 'recharts';
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip } from 'recharts';
 
 function Chart({ eixoX, eixoY }) {
   const [data, setData] = useState([]);

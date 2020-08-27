@@ -1,16 +1,18 @@
 /* eslint-disable react/prop-types */
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 
-import { Table, thead, tr, th, td, tbody, Pagination } from 'react-bootstrap';
+import { Table, thead, tr, th, tbody, Pagination } from 'react-bootstrap';
 import { useCurrentPage } from '../../hooks/CurrentPage';
-import { useOrder } from '../../hooks/Order';
+// import { useOrder } from '../../hooks/Order';
+import { useListRender } from '../../hooks/ListRender';
 
 import Item from '../Item';
 
 import { Container, Footer } from './styles';
 
-function Grid({ fields, list, arrayKey, count }) {
-  // const [listToRender, setListToRender] = useState(list);
+function Grid({ fields, arrayKey }) {
+  const { list, count } = useListRender();
+
   const [countToRender, setCountToRender] = useState(count);
   const { currentPage, setCurrentPage } = useCurrentPage();
   // const { newCount, newList, orderCliked } = useOrder();
@@ -23,7 +25,7 @@ function Grid({ fields, list, arrayKey, count }) {
       <Table striped bordered hover>
         <thead>
           <tr>
-            {fields.map((field, index) => (
+            {fields.map((field) => (
               <th key={field}>{field}</th>
             ))}
           </tr>
@@ -43,14 +45,14 @@ function Grid({ fields, list, arrayKey, count }) {
       <Footer>
         {currentPage === 1 && (
           <div>
-            Mostrando 1 - {9 * currentPage + (currentPage - 1)} de{' '}
-            {countToRender} resultados{' '}
+            Mostrando 1 - {9 * currentPage + (currentPage - 1)} de {count}{' '}
+            resultados{' '}
           </div>
         )}
         {currentPage !== 1 && (
           <div>
             Mostrando {(currentPage - 1) * 9 + (currentPage - 1)} -
-            {9 * currentPage + (currentPage - 1)} de {countToRender} resultados{' '}
+            {9 * currentPage + (currentPage - 1)} de {count} resultados{' '}
           </div>
         )}
         <div>
