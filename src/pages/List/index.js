@@ -9,7 +9,7 @@ import { PesquisarBar, OrderBar } from './styles';
 import { useListRender } from '../../hooks/ListRender';
 
 function List() {
-  const { setOrder, loadOrder, plus, setPlus } = useListRender();
+  const { setOrder, loadOrder, plus, setPlus, loadVul } = useListRender();
   const { setCurrentPage } = useCurrentPage();
   // const [count, setCount] = useState();
   // const [order, setOrder] = useState();
@@ -68,8 +68,9 @@ function List() {
 
   const handleOrder = (value) => {
     if (value === '') {
-      setCurrentPage(1);
-      setOrder(value);
+      // setCurrentPage(1);
+      // setOrder(value);
+      loadVul();
     } else {
       loadOrder(value);
     }

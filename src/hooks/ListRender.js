@@ -27,7 +27,7 @@ export const ListRenderProvider = ({ children }) => {
     localStorage.setItem('@ListExplorer:list', JSON.stringify(list));
   }, [list]);
 
-  useEffect(() => {
+  const loadVul = useCallback(() => {
     async function loadVulnerabilities() {
       const config = {
         headers: {
@@ -43,6 +43,10 @@ export const ListRenderProvider = ({ children }) => {
       setCount(response.data.count);
     }
     loadVulnerabilities();
+  }, []);
+
+  useEffect(() => {
+    loadVul();
   }, [currentPage, order]);
 
   const loadOrder = useCallback((value) => {
@@ -79,6 +83,7 @@ export const ListRenderProvider = ({ children }) => {
         count,
         list,
         plus,
+        loadVul,
       }}
     >
       {children}
