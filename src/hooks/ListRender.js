@@ -102,11 +102,27 @@ export const ListRenderProvider = ({ children }) => {
         `http://167.114.135.109/api/vulnerabilities/?asset=${id}&page_size=9`,
         config
       );
-      console.log(response.data.results);
       setList(response.data.results);
       setCount(response.data.count);
     }
     loadHostPorId();
+  }, []);
+
+  const loadVulId = useCallback((id) => {
+    async function loadVulPorId() {
+      const config = {
+        headers: {
+          Authorization: 'Token 7b1f9d46707352594bab9e07ae7ec5daaff7f1c2',
+        },
+      };
+      const response = await api.get(
+        `http://167.114.135.109/api/assets/?vulnerability=${id}&page_size=9`,
+        config
+      );
+      setList(response.data.results);
+      setCount(response.data.count);
+    }
+    loadVulPorId();
   }, []);
 
   return (
@@ -122,6 +138,7 @@ export const ListRenderProvider = ({ children }) => {
         loadVul,
         loadHos,
         loadHostId,
+        loadVulId,
       }}
     >
       {children}
