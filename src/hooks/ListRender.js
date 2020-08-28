@@ -91,6 +91,24 @@ export const ListRenderProvider = ({ children }) => {
     loadHosts();
   }, [currentPage]);
 
+  const loadHostId = useCallback((id) => {
+    async function loadHostPorId() {
+      const config = {
+        headers: {
+          Authorization: 'Token 7b1f9d46707352594bab9e07ae7ec5daaff7f1c2',
+        },
+      };
+      const response = await api.get(
+        `http://167.114.135.109/api/vulnerabilities/?asset=${id}&page_size=9`,
+        config
+      );
+      console.log(response.data.results);
+      setList(response.data.results);
+      setCount(response.data.count);
+    }
+    loadHostPorId();
+  }, []);
+
   return (
     <ListRenderContext.Provider
       value={{
@@ -103,6 +121,7 @@ export const ListRenderProvider = ({ children }) => {
         plus,
         loadVul,
         loadHos,
+        loadHostId,
       }}
     >
       {children}

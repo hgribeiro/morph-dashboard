@@ -13,7 +13,7 @@ import { Container, Footer } from './styles';
 function Grid({ fields, arrayKey }) {
   const { list, count } = useListRender();
 
-  const [countToRender, setCountToRender] = useState(count);
+  // const [countToRender, setCountToRender] = useState(count);
   const { currentPage, setCurrentPage } = useCurrentPage();
   // const { newCount, newList, orderCliked } = useOrder();
   // useEffect(() => {
@@ -43,7 +43,8 @@ function Grid({ fields, arrayKey }) {
         </tbody>
       </Table>
       <Footer>
-        {currentPage === 1 && (
+        {count < 9 && <div>Mostrando {count} resultados </div>}
+        {currentPage === 1 && count >= 9 && (
           <div>
             Mostrando 1 - {9 * currentPage + (currentPage - 1)} de {count}{' '}
             resultados{' '}

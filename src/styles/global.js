@@ -6,6 +6,7 @@ export default createGlobalStyle`
     padding: 0;
     outline: 0;
     box-sizing: border-box;
+    color: black;
   }
   body {
     -webkit-font-smoothing: antialiased;
@@ -20,5 +21,8 @@ export default createGlobalStyle`
   }
   button {
     cursor: pointer;
+  }
+  a:visited{
+    color: black;
   }
 `;

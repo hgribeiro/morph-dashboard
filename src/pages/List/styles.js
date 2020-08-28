@@ -18,6 +18,15 @@ export const PesquisarBar = styled.div`
   align-content: center;
   align-items: center;
   padding: 5px 25px 10px 5px;
+  button {
+    background-color: transparent;
+    border: 0px;
+    border-radius: 5px;
+    padding: 5px;
+  }
+  button:hover {
+    background-color: #ececec;
+  }
 `;
 export const OrderBar = styled.div`
   display: flex;
@@ -28,9 +37,16 @@ export const OrderBar = styled.div`
   select {
     margin-left: 8px;
   }
+`;
 
-  button {
-    background-color: transparent;
-    border: 0px;
+export const Input = styled.input`
+  width: 70px;
+  margin-right: 10px;
+`;
+
+export const ListItem = styled.div`
+  cursor: pointer;
+  svg {
+    margin: 0 5px;
   }
 `;
