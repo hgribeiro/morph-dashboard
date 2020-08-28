@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 
+import { BsList, BsBarChart } from 'react-icons/bs';
 import Cards from '../../components/Cards';
 import Chart from '../../components/Chart';
 import api from '../../services/api';
 
-import { Container } from './styles';
+import { Container, PesquisarBar, ListItem } from './styles';
 
 function Dashboard() {
   const [eixoForSeverity, setEixoForSeverity] = useState([1]);
@@ -51,6 +53,23 @@ function Dashboard() {
   }, []);
   return (
     <Container>
+      {' '}
+      <h2>Listagem de Hosts</h2>
+      <PesquisarBar>
+        <Link to="list">
+          <ListItem>
+            <BsList size={25} />
+            Vulnerabilidades
+          </ListItem>
+        </Link>
+
+        <Link to="/listhosts">
+          <ListItem>
+            <BsList size={25} />
+            Hosts
+          </ListItem>
+        </Link>
+      </PesquisarBar>
       <Cards />
       <h4>
         Gráfico com a distribuição de vulnerabilidade não corrigidas por

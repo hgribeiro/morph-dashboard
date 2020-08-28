@@ -1,28 +1,22 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
-import {
-  BsChevronDown,
-  BsChevronUp,
-  BsSearch,
-  BsList,
-  BsBarChart,
-} from 'react-icons/bs';
-import api from '../../services/api';
-import { useCurrentPage } from '../../hooks/CurrentPage';
+import { BsSearch, BsList, BsBarChart } from 'react-icons/bs';
+// import { useCurrentPage } from '../../hooks/CurrentPage';
 import { useListRender } from '../../hooks/ListRender';
 
 import Grid from '../../components/Grid';
-import { PesquisarBar, OrderBar, Input, ListItem } from './styles';
+import { Container, PesquisarBar, Input, ListItem } from './styles';
 
 function ListHosts() {
   const { loadVulId } = useListRender();
-  const { currentPage } = useCurrentPage();
+  // const { currentPage } = useCurrentPage();
   const { loadHos } = useListRender();
   const [id, setId] = useState();
+  const [currentPage, setCurrentPage] = useState(1);
 
   useEffect(() => {
-    loadHos();
+    loadHos(currentPage);
   }, [currentPage]);
 
   function handleSubmit(e) {
@@ -30,7 +24,9 @@ function ListHosts() {
     loadVulId(id);
   }
   return (
-    <>
+    <Container>
+      {' '}
+      <h2>Listagem de Hosts</h2>
       <PesquisarBar>
         <div>
           <form onSubmit={handleSubmit}>
@@ -62,8 +58,10 @@ function ListHosts() {
       <Grid
         fields={['Id', 'Nome', 'IP Adress', 'Risco', 'Nº Vuln. não corrigidas']}
         arrayKey={['id', 'hostname', 'ip_address', 'risk', 'vuln_count']}
+        setCurrentPage={setCurrentPage}
+        currentPage={currentPage}
       />
-    </>
+    </Container>
   );
 }
 

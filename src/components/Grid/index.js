@@ -2,7 +2,7 @@
 import React, { useState } from 'react';
 
 import { Table, thead, tr, th, tbody, Pagination } from 'react-bootstrap';
-import { useCurrentPage } from '../../hooks/CurrentPage';
+// import { useCurrentPage } from '../../hooks/CurrentPage';
 // import { useOrder } from '../../hooks/Order';
 import { useListRender } from '../../hooks/ListRender';
 
@@ -10,11 +10,11 @@ import Item from '../Item';
 
 import { Container, Footer } from './styles';
 
-function Grid({ fields, arrayKey }) {
+function Grid({ fields, arrayKey, currentPage, setCurrentPage }) {
   const { list, count } = useListRender();
+  // const { currentPage, setCurrentPage } = useCurrentPage();
 
   // const [countToRender, setCountToRender] = useState(count);
-  const { currentPage, setCurrentPage } = useCurrentPage();
   // const { newCount, newList, orderCliked } = useOrder();
   // useEffect(() => {
   //   setListToRender(newList);
@@ -43,17 +43,20 @@ function Grid({ fields, arrayKey }) {
         </tbody>
       </Table>
       <Footer>
-        {count < 9 && <div>Mostrando {count} resultados </div>}
-        {currentPage === 1 && count >= 9 && (
+        {count < 10 && <div>Mostrando {count} resultados </div>}
+        {currentPage === 1 && count >= 10 && (
+          <div>Mostrando 1 - 10 de {count} resultados </div>
+        )}
+        {currentPage !== 1 && currentPage !== Math.ceil(count / 9) && (
           <div>
-            Mostrando 1 - {9 * currentPage + (currentPage - 1)} de {count}{' '}
+            Mostrando {(currentPage - 1) * 10} - {10 * currentPage} de {count}{' '}
             resultados{' '}
           </div>
         )}
-        {currentPage !== 1 && (
+        {currentPage === Math.ceil(count / 10) && list.length < 9 && (
           <div>
-            Mostrando {(currentPage - 1) * 9 + (currentPage - 1)} -
-            {9 * currentPage + (currentPage - 1)} de {count} resultados{' '}
+            Mostrando {count - (list.length - 1)} - {count} de {count}{' '}
+            resultados{' '}
           </div>
         )}
         <div>
@@ -72,7 +75,7 @@ function Grid({ fields, arrayKey }) {
               </>
             )}
             <Pagination.Item active>{currentPage}</Pagination.Item>
-            {currentPage !== Math.ceil(count / 9) && (
+            {currentPage !== Math.ceil(count / 10) && (
               <>
                 <Pagination.Item
                   onClick={() => setCurrentPage(currentPage + 1)}
@@ -83,7 +86,7 @@ function Grid({ fields, arrayKey }) {
                   onClick={() => setCurrentPage(currentPage + 1)}
                 />
                 <Pagination.Last
-                  onClick={() => setCurrentPage(Math.ceil(count / 9))}
+                  onClick={() => setCurrentPage(Math.ceil(count / 10))}
                 />
               </>
             )}

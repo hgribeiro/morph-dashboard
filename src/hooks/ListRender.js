@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import React, {
   createContext,
   useState,
@@ -7,7 +8,7 @@ import React, {
 } from 'react';
 import api from '../services/api';
 
-import { useCurrentPage } from './CurrentPage';
+// import { useCurrentPage } from './CurrentPage';
 
 const ListRenderContext = createContext();
 
@@ -15,7 +16,7 @@ export const ListRenderProvider = ({ children }) => {
   const [order, setOrder] = useState();
   const [plus, setPlus] = useState(true);
   const [count, setCount] = useState();
-  const { currentPage } = useCurrentPage();
+  // const { currentPage } = useCurrentPage();
   const [list, setList] = useState(() => {
     const storedList = localStorage.getItem('@ListExplorer:list');
     if (storedList != null) {
@@ -27,7 +28,7 @@ export const ListRenderProvider = ({ children }) => {
     localStorage.setItem('@ListExplorer:list', JSON.stringify(list));
   }, [list]);
 
-  const loadVul = useCallback(() => {
+  const loadVul = useCallback((currentPage) => {
     async function loadVulnerabilities() {
       const config = {
         headers: {
@@ -35,7 +36,7 @@ export const ListRenderProvider = ({ children }) => {
         },
       };
       const response = await api.get(
-        `http://167.114.135.109/api/vulnerabilities/?page=${currentPage}&page_size=9`,
+        `http://167.114.135.109/api/vulnerabilities/?page=${currentPage}&page_size=10`,
         config
       );
       console.log('aqui nomrla');
@@ -43,11 +44,7 @@ export const ListRenderProvider = ({ children }) => {
       setCount(response.data.count);
     }
     loadVulnerabilities();
-  }, [currentPage]);
-
-  // useEffect(() => {
-  //   loadVul();
-  // }, [currentPage, order]);
+  }, []);
 
   const loadOrder = useCallback((value, x) => {
     async function loadVulnerabilitiesOrder() {
@@ -59,22 +56,17 @@ export const ListRenderProvider = ({ children }) => {
       const response = await api.get(
         `http://167.114.135.109/api/vulnerabilities/?ordering=${[x]}${[
           value,
-        ]}&page_size=9`,
+        ]}&page_size=10`,
         config
       );
-      console.log(list);
-      console.log('--------------');
-      console.log(response.data.results);
-      console.log('--------------');
 
       setList(response.data.results);
       setCount(response.data.count);
-      console.log(list);
     }
     loadVulnerabilitiesOrder();
   }, []);
 
-  const loadHos = useCallback(() => {
+  const loadHos = useCallback((currentPage) => {
     async function loadHosts() {
       const config = {
         headers: {
@@ -82,14 +74,14 @@ export const ListRenderProvider = ({ children }) => {
         },
       };
       const response = await api.get(
-        `http://167.114.135.109/api/assets/?page=${currentPage}&page_size=9`,
+        `http://167.114.135.109/api/assets/?page=${currentPage}&page_size=10`,
         config
       );
       setList(response.data.results);
       setCount(response.data.count);
     }
     loadHosts();
-  }, [currentPage]);
+  }, []);
 
   const loadHostId = useCallback((id) => {
     async function loadHostPorId() {
@@ -99,7 +91,7 @@ export const ListRenderProvider = ({ children }) => {
         },
       };
       const response = await api.get(
-        `http://167.114.135.109/api/vulnerabilities/?asset=${id}&page_size=9`,
+        `http://167.114.135.109/api/vulnerabilities/?asset=${id}&page_size=10`,
         config
       );
       setList(response.data.results);
@@ -116,7 +108,7 @@ export const ListRenderProvider = ({ children }) => {
         },
       };
       const response = await api.get(
-        `http://167.114.135.109/api/assets/?vulnerability=${id}&page_size=9`,
+        `http://167.114.135.109/api/assets/?vulnerability=${id}&page_size=10`,
         config
       );
       setList(response.data.results);

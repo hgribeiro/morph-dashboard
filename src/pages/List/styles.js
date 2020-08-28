@@ -1,7 +1,15 @@
 import styled from 'styled-components';
 
 export const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+  /* justify-content: center; */
+  align-items: center;
+  width: 100%;
   max-width: 900px;
+  h2 {
+    margin-bottom: 40px;
+  }
 `;
 
 export const Footer = styled.footer`
@@ -18,6 +26,9 @@ export const PesquisarBar = styled.div`
   align-content: center;
   align-items: center;
   padding: 5px 25px 10px 5px;
+
+  width: 100%;
+  max-width: 900px;
   button {
     background-color: transparent;
     border: 0px;

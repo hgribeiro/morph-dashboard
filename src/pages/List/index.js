@@ -9,12 +9,12 @@ import {
   BsBarChart,
 } from 'react-icons/bs';
 // import api from '../../services/api';
-import { useCurrentPage } from '../../hooks/CurrentPage';
+// import { useCurrentPage } from '../../hooks/CurrentPage';
 import { useListRender } from '../../hooks/ListRender';
 
 import Grid from '../../components/Grid';
 // import Item from '../../components/Item';
-import { PesquisarBar, OrderBar, Input, ListItem } from './styles';
+import { Container, PesquisarBar, OrderBar, Input, ListItem } from './styles';
 
 function List() {
   const {
@@ -25,12 +25,13 @@ function List() {
     loadVul,
     loadHostId,
   } = useListRender();
-  const { currentPage } = useCurrentPage();
+  // const { currentPage } = useCurrentPage();
   const [crescente, setCrescente] = useState('');
   const [hostId, setHostId] = useState('');
+  const [currentPage, setCurrentPage] = useState(1);
 
   useEffect(() => {
-    loadVul();
+    loadVul(currentPage);
   }, [currentPage, order]);
 
   const handlePlus = (filtro) => {
@@ -56,7 +57,9 @@ function List() {
   }
 
   return (
-    <>
+    <Container>
+      {' '}
+      <h2>Listagem de Hosts</h2>
       <PesquisarBar>
         <div>
           <form onSubmit={handleSubmit}>
@@ -123,8 +126,10 @@ function List() {
           'publication_date',
           'asset_count',
         ]}
+        setCurrentPage={setCurrentPage}
+        currentPage={currentPage}
       />
-    </>
+    </Container>
   );
 }
 
