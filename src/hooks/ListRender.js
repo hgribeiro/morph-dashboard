@@ -49,7 +49,7 @@ export const ListRenderProvider = ({ children }) => {
     loadVul();
   }, [currentPage, order]);
 
-  const loadOrder = useCallback((value) => {
+  const loadOrder = useCallback((value, x) => {
     async function loadVulnerabilitiesOrder() {
       const config = {
         headers: {
@@ -57,7 +57,7 @@ export const ListRenderProvider = ({ children }) => {
         },
       };
       const response = await api.get(
-        `http://167.114.135.109/api/vulnerabilities/?ordering=${[
+        `http://167.114.135.109/api/vulnerabilities/?ordering=${[x]}${[
           value,
         ]}&page_size=9`,
         config
