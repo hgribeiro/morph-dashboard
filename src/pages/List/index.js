@@ -1,17 +1,17 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { BsChevronDown, BsChevronUp } from 'react-icons/bs';
 // import api from '../../services/api';
 import { useCurrentPage } from '../../hooks/CurrentPage';
+import { useListRender } from '../../hooks/ListRender';
 
 import Grid from '../../components/Grid';
 // import Item from '../../components/Item';
 import { PesquisarBar, OrderBar } from './styles';
-import { useListRender } from '../../hooks/ListRender';
 
 function List() {
-  const { setOrder, loadOrder, plus, setPlus, loadVul } = useListRender();
-  const { setCurrentPage } = useCurrentPage();
-  const [crescente, setCrescente] = useState();
+  const { loadOrder, order, plus, setPlus, loadVul } = useListRender();
+  const { currentPage } = useCurrentPage();
+  const [crescente, setCrescente] = useState('');
   // const [count, setCount] = useState();
   // const [order, setOrder] = useState();
   // const [plus, setPlus] = useState(true);
@@ -66,16 +66,22 @@ function List() {
   //   }
   //   loadVulnerabilitiesOrder();
   // }, [order, plus]);
+
+  useEffect(() => {
+    loadVul();
+  }, [currentPage, order]);
+
   const handlePlus = (filtro) => {
-    setPlus(filtro);
-    if (filtro) loadOrder(crescente, '-');
-    if (!filtro) loadOrder(crescente);
+    if (crescente !== '') {
+      setPlus(filtro);
+      if (filtro) loadOrder(crescente, '-');
+      if (!filtro) loadOrder(crescente);
+    }
   };
   const handleOrder = (value) => {
     if (value === '') {
-      // setCurrentPage(1);
-      // setOrder(value);
       loadVul();
+      setCrescente('');
     } else {
       loadOrder(value);
       setCrescente(value);

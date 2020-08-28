@@ -71,7 +71,7 @@ function Grid({ fields, arrayKey }) {
               </>
             )}
             <Pagination.Item active>{currentPage}</Pagination.Item>
-            {currentPage !== Math.ceil(countToRender / 9) && (
+            {currentPage !== Math.ceil(count / 9) && (
               <>
                 <Pagination.Item
                   onClick={() => setCurrentPage(currentPage + 1)}
@@ -82,7 +82,7 @@ function Grid({ fields, arrayKey }) {
                   onClick={() => setCurrentPage(currentPage + 1)}
                 />
                 <Pagination.Last
-                  onClick={() => setCurrentPage(Math.ceil(countToRender / 9))}
+                  onClick={() => setCurrentPage(Math.ceil(count / 9))}
                 />
               </>
             )}
